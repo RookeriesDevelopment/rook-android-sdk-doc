@@ -212,6 +212,10 @@ result.fold(
 The `updateUserID` should be called as a part of your "Log in" and/or "Is Logged in" flow, when your users log out from
 your app call `clearUserID` (this is optional as any call to `updateUserID` will override the previous userID).
 
+```kotlin
+rookConfigurationManager.clearUserID()
+```
+
 #### User timezone
 
 Every time `updateUserID` completes successfully the timezone information will be updated, you can see the result of the
