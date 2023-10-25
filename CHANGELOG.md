@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.4.0
+
+The following functions from `RookHealthPermissionsManager` have been converted to static functions:
+
+* checkAvailability(context: Context)
+* registerPermissionsRequestLauncher(componentActivity: ComponentActivity)
+* registerPermissionsRequestLauncher(fragment: Fragment)
+* unregisterPermissionsRequestLauncher()
+* launchPermissionsRequest(permissions: HealthPermission)
+
 ## 0.3.0
 
 ### Android 14

@@ -300,7 +300,7 @@ Call `checkAvailability` providing a context and take the corresponding actions:
 | NOT_SUPPORTED | This device does not support Health Connect | Take the user out of the Health Connect section |
 
 ```kotlin
-val message = when (rookHealthPermissionsManager.checkAvailability(context)) {
+val message = when (RookHealthPermissionsManager.checkAvailability(context)) {
     AvailabilityStatus.INSTALLED -> "Health Connect is installed! You can skip the next step"
     AvailabilityStatus.NOT_INSTALLED -> "Health Connect is not installed. Please download from the Play Store"
     else -> "This device is not compatible with health connect. Please close the app"
@@ -351,13 +351,13 @@ The following block of code MUST be called before your activity/fragment reaches
 of the `onCreate\onCreateView` function.
 
 ```kotlin
-rookHealthPermissionsManager.registerPermissionsRequestLauncher(activity / fragment)
+RookHealthPermissionsManager.registerPermissionsRequestLauncher(activity / fragment)
 ```
 
 To request permissions call `launchPermissionsRequest` providing a `HealthPermission`.
 
 ```kotlin
-rookHealthPermissionsManager.launchPermissionsRequest(HealthPermission.ALL)
+RookHealthPermissionsManager.launchPermissionsRequest(HealthPermission.ALL)
 ```
 
 **IMPORTANT**
@@ -367,7 +367,7 @@ of the `onDestroy` function.
 
 ```kotlin
 fun onDestroy() {
-    rookHealthPermissionsManager.unregisterPermissionsRequestLauncher()
+  RookHealthPermissionsManager.unregisterPermissionsRequestLauncher()
     super.onDestroy()
 }
 ```
