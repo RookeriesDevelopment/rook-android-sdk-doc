@@ -32,7 +32,7 @@ In your build.gradle (app) set your min and target sdk version like below:
 
 ```groovy
 minSdk 26
-targetSdk 33
+targetSdk 34
 ```
 
 * Health Connect will only work with devices of a minSdk 28 or later. The `minSdk 26` is to keep
