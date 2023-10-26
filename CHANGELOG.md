@@ -25,6 +25,7 @@ This version will only compile against Android 14 (SDK 34). Please follow the st
 * Permissions functions have changed, see [Check permissions](README.md#check-permissions) for more information.
 * Privacy policy configuration has changed, see [Privacy policy](README.md#privacy-policy) for more information.
 * Updated data access links, see [Privacy policy](README.md#request-data-access) for more information.
+* Added new obfuscation rules, see [Obfuscation](README.md#obfuscation) for more information.
 
 ## 0.2.0
 
