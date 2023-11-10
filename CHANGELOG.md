@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.4.1
+
+* Optimized the number of calls to Health Connect required to extract Temperature Events.
+
 ## 0.4.0
 
 The following functions from `RookHealthPermissionsManager` have been converted to static functions:
