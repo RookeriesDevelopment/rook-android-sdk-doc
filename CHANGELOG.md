@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.4.1
+## 0.4.4
 
 * Optimized the number of calls to Health Connect required to extract Temperature Events.
 
