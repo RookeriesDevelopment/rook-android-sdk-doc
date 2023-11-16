@@ -683,5 +683,5 @@ suspend fun syncEvents() {
 
 ## Other resources
 
-* See a complete list of rook-sdk functions in
-  the [Javadoc](https://javadoc.io/doc/com.rookmotion.android/rook-sdk/latest/com/rookmotion/rook/sdk/package-summary.html)
+* See a complete list of rook-sdk functions in the [Javadoc](https://javadoc.io/doc/com.rookmotion.android/rook-sdk/latest/com/rookmotion/rook/sdk/package-summary.html)
+* Download and compile the demo application from our [Repository](https://github.com/RookeriesDevelopment/rook-demo-app-kotlin) 
