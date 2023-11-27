@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.5
+
+* Added StepsTracker to extract steps from phones, more information in the [Steps Tracker Documentation](STEPS_TRACKER.md)
+* When registering a user the Health Connect datasource status will be changed to active.
+* When requesting permissions the Health Connect datasource status will be changed to active.
+
 ## 0.4.4
 
 * Optimized the number of calls to Health Connect required to extract Temperature Events.
