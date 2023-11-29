@@ -76,7 +76,7 @@ Before proceeding further, you need to ensure the user's device has the required
 Context:
 
 ```kotlin
-StepsTracker.isAvailable(context)
+val isAvailable = StepsTracker.isAvailable(context)
 ```
 
 ### Check permissions
@@ -84,7 +84,7 @@ StepsTracker.isAvailable(context)
 To check permissions call `hasPermissions` providing a Context:
 
 ```kotlin
-StepsTracker.hasPermissions(context)
+val hasPermissions = StepsTracker.hasPermissions(context)
 ```
 
 ### Request permissions
@@ -133,13 +133,44 @@ To use your own resources you need to reference them in the **AndroidManifest.xm
 To start tracking steps call `start` providing a Context:
 
 ```kotlin
-StepsTracker.start(context)
+StepsTracker.start(context).fold(
+    {
+        // StepsTracker start request send successfully. 
+        // Use StepsTracker.isActive() to ensure proper activation.
+    },
+    { throwable ->
+        val error = when (throwable) {
+            is SDKNotInitializedException -> "SDKNotInitializedException: ${throwable.message}"
+            is MissingAndroidPermissionsException -> "MissingAndroidPermissionsException: ${throwable.message}"
+            else -> throwable.localizedMessage
+        }
+
+        Timber.e("Error starting steps tracker: $error")
+
+        // Error sending StepsTracker start request. 
+    }
+)
 ```
 
 To stop tracking steps call `stop` providing a Context:
 
 ```kotlin
-StepsTracker.stop(context)
+StepsTracker.stop(context).fold(
+    {
+        // StepsTracker stop request send successfully. 
+        // Use StepsTracker.isActive() to ensure proper deactivation.
+    },
+    { throwable ->
+        val error = when (throwable) {
+            is SDKNotInitializedException -> "SDKNotInitializedException: ${throwable.message}"
+            else -> throwable.localizedMessage
+        }
+
+        Timber.e("Error stopping steps tracker: $error")
+
+        // Error sending StepsTracker stop request. 
+    }
+)
 ```
 
 #### Recommendations
@@ -148,7 +179,7 @@ Calling `start`/ `stop` when the service is active/inactive will do nothing, how
 active with `isActive`:
 
 ```kotlin
-StepsTracker.isActive()
+val isActive = StepsTracker.isActive()
 ```
 
 #### Get today step count
@@ -156,7 +187,19 @@ StepsTracker.isActive()
 Call `getTodaySteps` to obtain the last stored step count of the current day:
 
 ```kotlin
-StepsTracker.getTodaySteps()
+StepsTracker.getTodaySteps().fold(
+    { todaySteps ->
+        // Steps obtained successfully.
+    },
+    { throwable ->
+        val error = when (throwable) {
+            is SDKNotInitializedException -> "SDKNotInitializedException: ${throwable.message}"
+            else -> throwable.localizedMessage
+        }
+
+        // Error obtaining steps.
+    }
+)
 ```
 
 This value is updated every time the phone detects a step taken and will be reset to zero every day. You can call this
@@ -165,9 +208,14 @@ function as many times as you like, although we recommend to put a delay of 1000
 ```kotlin
 scope.launch {
     while (isActive) {
-        val todaySteps = StepsTracker.getTodaySteps()
-
-        // Use todaySteps to update state
+        StepsTracker.getTodaySteps().fold(
+            { todaySteps ->
+                // Steps obtained successfully.
+            },
+            { throwable ->
+                // Error obtaining steps.
+            }
+        )
 
         delay(3000) // 1000 to 3000 milliseconds
     }
