@@ -52,7 +52,7 @@ If you want to enable full mode add the following rules to proguard-rules.pro:
 
 #### Included permissions
 
-This SDK will add the following permissions to your app:
+This SDK will add the following permissions to your manifest:
 
 * RECEIVE_BOOT_COMPLETED
 * ACTIVITY_RECOGNITION
@@ -68,15 +68,7 @@ Go to the main [Logging](README.md#logging) section to configure logs.
 
 ### Initialize
 
-Before using any functionalities call `initRookTracker` providing a Context:
-
-```kotlin
-RookTrackerConfiguration.initRookTracker(this)
-```
-
-#### Recommendations
-
-We recommend to code the initialization in the Application's class in the `onCreate` function.
+Go to the main [Initialize](README.md#initialize) and [Update userID](README.md#update-userid) sections to initialize.
 
 ### Check availability
 
@@ -178,6 +170,21 @@ scope.launch {
         // Use todaySteps to update state
 
         delay(3000) // 1000 to 3000 milliseconds
+    }
+}
+```
+
+#### Observe today step count (Experimental)
+
+Call `observeTodaySteps` to get a **SharedFlow** which receives updates of the current day's total steps. Upon
+subscribing, you will get the last emitted value.
+
+```kotlin
+scope.launch {
+    // This element (class, method or field) is not in stable state yet. It may be renamed, changed or even removed in a future version.
+    @OptIn(Experimental::class) 
+    StepsTracker.observeTodaySteps().collect {
+        // Update your UI
     }
 }
 ```
