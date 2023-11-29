@@ -1,10 +1,11 @@
 # Changelog
 
-## 0.4.5
+## 0.5.0
 
 * Added StepsTracker to extract steps from phones, more information in the [Steps Tracker Documentation](STEPS_TRACKER.md)
-* When registering a user the Health Connect datasource status will be changed to active.
-* When requesting permissions the Health Connect datasource status will be changed to active.
+* When registering a user the Health Connect data source status will be changed to active.
+* When requesting permissions the Health Connect data source status will be changed to active.
+* Changed all `clientPassword` instances to `secretKey`.
 
 ## 0.4.4
 
