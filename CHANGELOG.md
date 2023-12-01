@@ -1,11 +1,23 @@
 # Changelog
 
+## 0.5.2
+
+* Fixed logs when requesting StepTracker permissions.
+
+## 0.5.1
+
+* Fixed bug: Timezone always fails to sync when calling `updateUserID`.
+* Fixed bug: Random crashes when using `requestMissingPermissions`.
+
 ## 0.5.0
 
-* Added StepsTracker to extract steps from phones, more information in the [Steps Tracker Documentation](STEPS_TRACKER.md)
+* Added StepsTracker to extract steps from phones, more information in
+  the [Steps Tracker Documentation](STEPS_TRACKER.md)
 * When registering a user the Health Connect data source status will be changed to active.
 * When requesting permissions the Health Connect data source status will be changed to active.
 * Changed all `clientPassword` instances to `secretKey`.
+* Added `deleteUserFromRook`, this function will remove a user from both server and preferences,
+  see [Removing registered users](README.md#removing-registered-users) for more information.
 
 ## 0.4.4
 

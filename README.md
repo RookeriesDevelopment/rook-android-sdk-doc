@@ -116,30 +116,30 @@ permissions action:
 ```xml
 
 <application>
-  <!-- For supported versions through Android 13, create an activity to show the rationale
-       of Health Connect permissions once users click the privacy policy link. -->
-  <activity android:name=".features.healthconnect.privacypolicy.HCPrivacyPolicyActivity"
-            android:enabled="true"
-            android:exported="true">
+    <!-- For supported versions through Android 13, create an activity to show the rationale
+         of Health Connect permissions once users click the privacy policy link. -->
+    <activity android:name=".features.healthconnect.privacypolicy.HCPrivacyPolicyActivity"
+              android:enabled="true"
+              android:exported="true">
 
-    <intent-filter>
-      <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE"/>
-    </intent-filter>
-  </activity>
+        <intent-filter>
+            <action android:name="androidx.health.ACTION_SHOW_PERMISSIONS_RATIONALE"/>
+        </intent-filter>
+    </activity>
 
-  <!-- For versions starting Android 14, create an activity alias to show the rationale 
-       of Health Connect permissions once users click the privacy policy link. -->
-  <activity-alias
-          android:name="ViewPermissionUsageActivity"
-          android:exported="true"
-          android:targetActivity=".features.healthconnect.privacypolicy.HCPrivacyPolicyActivity"
-          android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
+    <!-- For versions starting Android 14, create an activity alias to show the rationale 
+         of Health Connect permissions once users click the privacy policy link. -->
+    <activity-alias
+        android:name="ViewPermissionUsageActivity"
+        android:exported="true"
+        android:targetActivity=".features.healthconnect.privacypolicy.HCPrivacyPolicyActivity"
+        android:permission="android.permission.START_VIEW_PERMISSION_USAGE">
 
-    <intent-filter>
-      <action android:name="android.intent.action.VIEW_PERMISSION_USAGE"/>
-      <category android:name="android.intent.category.HEALTH_PERMISSIONS"/>
-    </intent-filter>
-  </activity-alias>
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW_PERMISSION_USAGE"/>
+            <category android:name="android.intent.category.HEALTH_PERMISSIONS"/>
+        </intent-filter>
+    </activity-alias>
 </application>
 ```
 
@@ -188,21 +188,21 @@ val rookConfigurationManager = RookConfigurationManager(context)
 
 Set a configuration and initialize. The `RookConfiguration` requires the following parameters:
 
-* [clientUUID](https://docs.tryrook.io/docs/Definitions#client_uuid)
-* [clientPassword](https://docsbeta.tryrook.io/docs/Definitions#client_password)
+* [clientUUID](https://docs.tryrook.io/docs/Definitions/#client_uuid)
+* [secretKey](https://docs.tryrook.io/docs/Definitions/#client_secret)
 * [Environment](#environment)
 
 ```kotlin
 val environment = if (BuildConfig.DEBUG) RookEnvironment.SANDBOX else RookEnvironment.PRODUCTION
 
 val rookConfiguration = RookConfiguration(
-  CLIENT_UUID,
-  CLIENT_PASSWORD,
-  environment,
+    CLIENT_UUID,
+    SECRET_KEY,
+    environment,
 )
 
 if (BuildConfig.DEBUG) {
-  rookConfigurationManager.enableLocalLogs() // MUST be called first if you want to enable native logs
+    rookConfigurationManager.enableLocalLogs() // MUST be called first if you want to enable native logs
 }
 
 rookConfigurationManager.setConfiguration(rookConfiguration)
@@ -272,6 +272,30 @@ your app call `clearUserID` (this is optional as any call to `updateUserID` will
 
 ```kotlin
 rookConfigurationManager.clearUserID()
+```
+
+### Removing registered users
+
+If you want to remove a userID from a data source call `deleteUserFromRook` it will remove the current user from
+HEALTH_CONNECT data source once removed rook servers won't accept any health data from HEALTH_CONNECT.
+
+```kotlin
+val result = rookConfigurationManager.deleteUserFromRook()
+
+result.fold(
+    {
+        // User deleted from rook
+    },
+    {
+        val error = when (it) {
+            is SDKNotInitializedException -> "SDKNotInitializedException: ${it.message}"
+            is UserNotInitializedException -> "UserNotInitializedException: ${it.message}"
+            else -> it.localizedMessage
+        }
+
+        // Error deleting user from rook
+    }
+)
 ```
 
 #### User timezone
@@ -369,7 +393,8 @@ result.fold(
 
 ### Request permissions
 
-Before requesting permissions you need to register the `RookHealthPermissionsManager` with an activity (ComponentActivity) or
+Before requesting permissions you need to register the `RookHealthPermissionsManager` with an activity (
+ComponentActivity) or
 fragment. Call `registerPermissionsRequestLauncher` providing an activity/fragment.
 
 The following block of code MUST be called before your activity/fragment reaches the `resume` state preferably as part
@@ -392,7 +417,7 @@ of the `onDestroy` function.
 
 ```kotlin
 fun onDestroy() {
-  RookHealthPermissionsManager.unregisterPermissionsRequestLauncher()
+    RookHealthPermissionsManager.unregisterPermissionsRequestLauncher()
     super.onDestroy()
 }
 ```
@@ -683,5 +708,7 @@ suspend fun syncEvents() {
 
 ## Other resources
 
-* See a complete list of rook-sdk functions in the [Javadoc](https://javadoc.io/doc/com.rookmotion.android/rook-sdk/latest/com/rookmotion/rook/sdk/package-summary.html)
-* Download and compile the demo application from our [Repository](https://github.com/RookeriesDevelopment/rook-demo-app-kotlin) 
+* See a complete list of rook-sdk functions in
+  the [Javadoc](https://javadoc.io/doc/com.rookmotion.android/rook-sdk/latest/com/rookmotion/rook/sdk/package-summary.html)
+* Download and compile the demo application from
+  our [Repository](https://github.com/RookeriesDevelopment/rook-demo-app-kotlin) 

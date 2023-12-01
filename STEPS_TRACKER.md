@@ -72,8 +72,8 @@ Go to the main [Initialize](README.md#initialize) and [Update userID](README.md#
 
 ### Check availability
 
-Before proceeding further, you need to ensure the user's device has the required sensors. Call `isAvailable` providing a
-Context:
+Before proceeding further, you need to ensure the user's device has the required sensors.
+Call `StepsTracker.isAvailable` providing a Context:
 
 ```kotlin
 val isAvailable = StepsTracker.isAvailable(context)
@@ -81,7 +81,7 @@ val isAvailable = StepsTracker.isAvailable(context)
 
 ### Check permissions
 
-To check permissions call `hasPermissions` providing a Context:
+To check permissions call `StepsTracker.hasPermissions` providing a Context:
 
 ```kotlin
 val hasPermissions = StepsTracker.hasPermissions(context)
@@ -89,7 +89,7 @@ val hasPermissions = StepsTracker.hasPermissions(context)
 
 ### Request permissions
 
-To request permissions call `requestPermissions` providing a Context:
+To request permissions call `StepsTracker.requestPermissions` providing a Context:
 
 ```kotlin
 StepsTracker.requestPermissions(context)
@@ -130,7 +130,7 @@ To use your own resources you need to reference them in the **AndroidManifest.xm
 
 #### Tracker controls
 
-To start tracking steps call `start` providing a Context:
+To start tracking steps call `StepsTracker.start` providing a Context:
 
 ```kotlin
 StepsTracker.start(context).fold(
@@ -145,14 +145,12 @@ StepsTracker.start(context).fold(
             else -> throwable.localizedMessage
         }
 
-        Timber.e("Error starting steps tracker: $error")
-
         // Error sending StepsTracker start request. 
     }
 )
 ```
 
-To stop tracking steps call `stop` providing a Context:
+To stop tracking steps call `StepsTracker.stop` providing a Context:
 
 ```kotlin
 StepsTracker.stop(context).fold(
@@ -166,8 +164,6 @@ StepsTracker.stop(context).fold(
             else -> throwable.localizedMessage
         }
 
-        Timber.e("Error stopping steps tracker: $error")
-
         // Error sending StepsTracker stop request. 
     }
 )
@@ -175,8 +171,8 @@ StepsTracker.stop(context).fold(
 
 #### Recommendations
 
-Calling `start`/ `stop` when the service is active/inactive will do nothing, however you can check if the service is
-active with `isActive`:
+Calling `StepsTracker.start`/ `StepsTracker.stop` when the service is active/inactive will do nothing, however you can
+check if the service is active with `StepsTracker.isActive`:
 
 ```kotlin
 val isActive = StepsTracker.isActive()
@@ -184,7 +180,7 @@ val isActive = StepsTracker.isActive()
 
 #### Get today step count
 
-Call `getTodaySteps` to obtain the last stored step count of the current day:
+Call `StepsTracker.getTodaySteps` to obtain the last stored step count of the current day:
 
 ```kotlin
 StepsTracker.getTodaySteps().fold(
@@ -224,13 +220,14 @@ scope.launch {
 
 #### Observe today step count (Experimental)
 
-Call `observeTodaySteps` to get a **SharedFlow** which receives updates of the current day's total steps. Upon
+Call `StepsTracker.observeTodaySteps` to get a **SharedFlow** which receives updates of the current day's total steps.
+Upon
 subscribing, you will get the last emitted value.
 
 ```kotlin
 scope.launch {
     // This element (class, method or field) is not in stable state yet. It may be renamed, changed or even removed in a future version.
-    @OptIn(Experimental::class) 
+    @OptIn(Experimental::class)
     StepsTracker.observeTodaySteps().collect {
         // Update your UI
     }
