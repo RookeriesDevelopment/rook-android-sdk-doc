@@ -221,8 +221,7 @@ scope.launch {
 #### Observe today step count (Experimental)
 
 Call `StepsTracker.observeTodaySteps` to get a **SharedFlow** which receives updates of the current day's total steps.
-Upon
-subscribing, you will get the last emitted value.
+Upon subscribing, you will get the last emitted value.
 
 ```kotlin
 scope.launch {

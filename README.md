@@ -3,9 +3,9 @@
 This SDK enables apps to extract and upload data from Health Connect.
 
 * This SDK was developed with our modular SDKs as a way to simplify their implementation:
-    * [rook-users](https://github.com/RookeriesDevelopment/rook-android-sdks-docs/tree/main/rook-users)
-    * [rook-health-connect](https://github.com/RookeriesDevelopment/rook-android-sdks-docs/tree/main/rook-health-connect)
-    * [rook-transmission](https://github.com/RookeriesDevelopment/rook-android-sdks-docs/tree/main/rook-transmission)
+    * rook-users
+    * rook-health-connect
+    * rook-transmission
 
 ## Features
 
@@ -361,7 +361,7 @@ val message = when (RookHealthPermissionsManager.checkAvailability(context)) {
 To check permissions call `checkPermissions` and provide a `HealthPermission`, available permissions:
 
 * SLEEP - [Sleep Health](https://docs.tryrook.io/docs/Definitions/#sleep-health-data-pillar) Data Pillar permissions.
-* PHYSICAL - [Physical Health](https://docs.tryrook.io/docs/Definitions/#body-health-data-pillar) Data Pillar
+* PHYSICAL - [Physical Health](https://docs.tryrook.io/docs/Definitions/#physical-health-data-pillar) Data Pillar
   permissions.
 * BODY - [Body Health](https://docs.tryrook.io/docs/Definitions/#body-health-data-pillar) Data Pillar permissions.
 * ALL - All Health Data Pillar permissions.
